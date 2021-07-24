@@ -21,7 +21,6 @@ class CreateGymsTable extends Migration
             $table->string('code_fiscal');
             $table->string('vacation_day');
             $table->string('url_fcb');
-            $table->foreignId('current_subscription')->constrained('users')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });
     }
