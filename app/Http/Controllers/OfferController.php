@@ -75,8 +75,15 @@ class OfferController extends Controller
     {
         $res=new Result();
         $offer=new Offer();
-        $offer->UpdateOne($request->all(),$id);
-        $res->success();
+        try {
+            $offer->UpdateOne($request->all(),$id);
+            $res->success();
+        }
+        catch (\Exception $e)
+        {
+            $res->fail($e->getMessage());
+            return response()->json($res,400);
+        }
         return response()->json($res);
     }
 }

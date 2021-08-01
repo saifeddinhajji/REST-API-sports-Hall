@@ -35,12 +35,12 @@
 
 
 
-Route::group(['namespace' => '\App\Http\Controllers', 'prefix' => 'coachs'],
+Route::group(['namespace' => '\App\Http\Controllers', 'prefix' => 'employees'],
     function ($router) {
-        Route::get('', 'CoachController@index');
-        Route::post('', 'CoachController@add');
-        Route::put('/{id}', 'CoachController@update');
-        Route::delete('/{id}', 'CoachController@delete');
+        Route::get('', 'EmployeesController@index');
+        Route::post('', 'EmployeesController@add');
+        Route::put('/{id}', 'EmployeesController@update');
+        Route::delete('/{id}', 'EmployeesController@delete');
     });
 
 Route::post('upload_file', 'UploadFileController@uploadFile');
@@ -74,6 +74,14 @@ Route::group([
         Route::post('', 'OfferController@add');
         Route::put('/change_status/{id}', 'OfferController@changeStatus');
     });
+Route::group([
+    'namespace' => '\App\Http\Controllers',
+    'prefix' => 'adherents',
+], function ($router) {
+    Route::get('', 'AdherentController@index');
+    Route::post('', 'AdherentController@add');
+    Route::put('{id}', 'AdherentController@update');
+});
 
     Route::group([
         'namespace' => '\App\Http\Controllers',

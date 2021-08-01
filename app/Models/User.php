@@ -17,7 +17,6 @@ class User extends BaseModelUser
      * @var array
      */
     protected $fillable = [ 'first_name', 'last_name', 'status','email', 'password', 'phone', 'photo', 'role', 'address','gym_id' ];
-
     /**
      * The attributes that should be hidden for arrays.
      * @var array
@@ -35,9 +34,9 @@ class User extends BaseModelUser
             'email' => 'required|email|unique:users,email',
             'phone' => 'nullable|unique:users,phone',
             'role' => 'required|string',
-            'password' => 'required|string',
+            'password' => 'nullable|string',
             'address'=>'nullable|string',
-            'gym_id' => 'required|exists:gyms,id'
+            'gym_id' => 'nullable|exists:gyms,id'
         ];
 
     protected $with=['gym'];

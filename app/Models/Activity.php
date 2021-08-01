@@ -7,7 +7,7 @@ class Activity extends BaseModelClass
      * The attributes that are mass assignable.
      * @var array
      */
-    protected $fillable = ['name','coach_id', 'description'];
+    protected $fillable = ['name','coach_id', 'description','status'];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -24,6 +24,7 @@ class Activity extends BaseModelClass
             'name' => 'required|unique:activities,name',
             'description' => 'required',
             'coach_id' => 'required|unique:activities,name',
+            'status'=>'nullable|boolean'
         ];
     protected $with=['coach'];
     protected $casts = [];

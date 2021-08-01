@@ -17,7 +17,7 @@ class CreateTypesSubscriptionsTable extends Migration
             $table->id();
             $table->string('name');
             $table->text('description');
-            $table->integer('duration');
+            $table->string('duration');
             $table->float('price');
             $table->foreignId('activity_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->integer('number_of_sessions');
@@ -27,7 +27,6 @@ class CreateTypesSubscriptionsTable extends Migration
 
     /**
      * Reverse the migrations.
-     *
      * @return void
      */
     public function down()

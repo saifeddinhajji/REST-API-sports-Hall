@@ -70,7 +70,7 @@ class AuthController extends BaseAuthController
         $res = new Result();
         try {
         DB::beginTransaction();
-        $dataGym = $request->all(['name','description','logo','code_fiscal','vacation_day','url_fcb']);
+        $dataGym = $request->all(['name','description','logo','code_fiscal','vacation_day','url_fcb','address']);
         $gym =  new Gym();
         $res = $gym->CreateOne($dataGym);
         if(!$res->success)
@@ -157,12 +157,22 @@ class AuthController extends BaseAuthController
     public function me()
     {
         $res=new Result();
-        $res->success(Auth::user());
+        $res->success($this->guard()->user());
         return response()->json($res);
     }
-    public function update()
+    public function update(Request $request)
     {
-
+        $res=new Result();
+        try {
+          $user=new User();
+         $res= $user->UpdateOne($request->all(),$this->guard()->id());
+        }
+        catch (\Exception $e)
+        {
+            $res->fail($e->getMessage());
+            return response()->json($res,400);
+        }
+        return response()->json($res);
     }
 
 
