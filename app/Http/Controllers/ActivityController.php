@@ -43,9 +43,6 @@ class ActivityController extends BaseAuthController
 
     }
 
-
-
-
     public function update($id,Request $request)
     {
         $res=new Result();

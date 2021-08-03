@@ -67,10 +67,11 @@ class AuthController extends BaseAuthController
      */
     public function signUp(Request $request)
     {
+
         $res = new Result();
         try {
         DB::beginTransaction();
-        $dataGym = $request->all(['name','description','logo','code_fiscal','vacation_day','url_fcb','address']);
+        $dataGym = $request->all(['name','description','logo','code_fiscal','vacation_day','url_fcb','addressGym']);
         $gym =  new Gym();
         $res = $gym->CreateOne($dataGym);
         if(!$res->success)
@@ -78,23 +79,16 @@ class AuthController extends BaseAuthController
             return response()->json($res,400);
         }
         $data = $request->all(['first_name', 'last_name', 'email','password','address','phone','photo']);
-        $data['gym_id']=$res->data->id;
-        $data['role']="manager";
+        $data['gym_id'] = $res->data->id;
+        $data['role'] = "manager";
         $user = new User();
         $res = $user->CreateOne($data);
-        if(!$res->success)
-        {
-            return response()->json($res,400);
-        }
+        if(!$res->success) { return response()->json($res,400);}
         $dataSubscription = $request->all(['start_at','end_at','offer_id','payment_receipt']);
         $dataSubscription['gym_id']=$res->data->gym_id;
         $subscriptionGym=new SubscriptionGym();
         $res= $subscriptionGym->CreateOne($dataSubscription);
-
-        if(!$res->success)
-        {
-            return response()->json($res,400);
-        }
+        if(!$res->success) { return response()->json($res,400); }
         $res->success();
         $res->message="inscription a été effectué avec succès";
         DB::commit();

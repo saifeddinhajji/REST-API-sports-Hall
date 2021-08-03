@@ -8,13 +8,13 @@ class Gym extends BaseModelClass
      * @var array
      */
 
-    protected $fillable = ['name','description','logo','code_fiscal','vacation_day','url_fcb','address'];
+    protected $fillable = ['name','description','logo','code_fiscal','vacation_day','url_fcb','addressGym'];
 
     /**
      * The attributes that should be hidden for arrays.
      * @var array
      */
-    protected $hidden = ['created_at'];
+    protected $hidden = ['created_at','address'];
 
     /**
      * The attributes that should be cast to native types.

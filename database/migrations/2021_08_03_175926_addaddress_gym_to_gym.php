@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddColToModelGym extends Migration
+class AddaddressGymToGym extends Migration
 {
     /**
      * Run the migrations.
@@ -14,19 +14,18 @@ class AddColToModelGym extends Migration
     public function up()
     {
         Schema::table('gyms', function (Blueprint $table) {
-            $table->string('address')->nullable();
+            $table->string('addressGym')->nullable();
         });
     }
 
     /**
      * Reverse the migrations.
-     *
      * @return void
      */
     public function down()
     {
         Schema::table('gyms', function (Blueprint $table) {
-            //
+            $table->dropColumn('addressGym');
         });
     }
 }
