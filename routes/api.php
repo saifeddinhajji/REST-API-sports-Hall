@@ -53,7 +53,7 @@ Route::group(['namespace' => '\App\Http\Controllers', 'prefix' => 'gyms'],
 Route::group(['namespace' => '\App\Http\Controllers', 'prefix' => 'managers'],
     function ($router) {
         Route::get('', 'ManagerController@index');
-        Route::get('change_status/{id}', 'ManagerController@changeStatus');
+        Route::put('change_status/{id}', 'ManagerController@changeStatus');
     });
 
 Route::group([

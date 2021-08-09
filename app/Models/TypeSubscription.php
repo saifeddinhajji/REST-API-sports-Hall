@@ -11,7 +11,7 @@ class TypeSubscription extends BaseModelClass
      * @var array
      */
 
-    protected $fillable = ['activity_id','name','duration','price','description','number_of_sessions'];
+    protected $fillable = ['activity_id','name','duration','price','description','unit','number_of_sessions'];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -29,6 +29,7 @@ protected $with=['activity'];
             'description' => 'required|string',
             'duration'=>'required|numeric',
             'price' => 'required|numeric',
+            'unit'=>'required|',
             'activity_id' => 'required|exists:activities,id',
 
         ];

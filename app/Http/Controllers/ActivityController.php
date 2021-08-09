@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Libs\Result;
 use App\Models\Activity;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class ActivityController extends BaseAuthController
 {
@@ -12,6 +13,7 @@ class ActivityController extends BaseAuthController
     public function index(Request $request)
     {
         $res=new Result();
+         Log::channel('stderr')->info(['type'=> $request->headers]);
         $list=Activity::query();
         $gym_id=$this->guard()->user()->gym_id;
         if($request->has('list'))
