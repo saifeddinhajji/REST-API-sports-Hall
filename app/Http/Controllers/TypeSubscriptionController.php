@@ -23,7 +23,6 @@ class TypeSubscriptionController extends BaseAuthController
 
     public function add(Request $request)
     {
-        return $request->all();
         $typeSubscription=new TypeSubscription();
         $res= $typeSubscription->CreateOne($request->all());
         return response()->json($res);
@@ -39,8 +38,13 @@ class TypeSubscriptionController extends BaseAuthController
 
     public function update($id,Request $request)
     {
-        $res=new Result();
         $TypeSubscription=new TypeSubscription();
+
+        $res=new Result();
+        if($request->has('status'))
+        {
+            $TypeSubscription->roleDataCreate=[];
+        }
         $TypeSubscription->UpdateOne($request->all(),$id);
         $res->success();
         return response()->json($res);
