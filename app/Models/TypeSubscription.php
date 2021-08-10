@@ -29,7 +29,7 @@ protected $with=['activity'];
             'description' => 'required|string',
             'duration'=>'required|numeric',
             'price' => 'required|numeric',
-            'unit'=>'required|',
+            'unit'=>'required|in:day,month,year',
             'activity_id' => 'required|exists:activities,id',
 
         ];

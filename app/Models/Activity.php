@@ -27,7 +27,7 @@ class Activity extends BaseModelClass
             'status'=>'nullable|boolean'
         ];
     protected $with=['coach'];
-    protected $casts = [];
+    protected $casts = ['status'=>'boolean'];
 
     public  function  coach()
     {

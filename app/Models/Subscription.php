@@ -7,9 +7,7 @@ class Subscription extends BaseModelClass
      * The attributes that are mass assignable.
      * @var array
      */
-
     protected $fillable = ['type_subscriptions_id', 'adherent_id','start_at','end_at'];
-
     /**
      * The attributes that should be hidden for arrays.
      * @var array
@@ -23,15 +21,19 @@ class Subscription extends BaseModelClass
     public $roleDataCreate =
         [
             'adherent_id' => 'required|exists:users,id',
-            'type_subscriptions_id' => 'required||exists:users,id',
+            'type_subscriptions_id' => 'required||exists:types_subscriptions,id',
             'start_at'=>'required|date|after_or_equal:today',
             'end_at' => 'required|date|after_or_equal:start_at',
         ];
     protected $casts = [];
-protected $with=['activity','adherent'];
+protected $with=['typesSubscription','adherent'];
 
     public function  adherent()
     {
         return $this->belongsTo(\App\Models\User::class);
+    }
+    public function  typesSubscription()
+    {
+        return $this->belongsTo(TypeSubscription::class,'type_subscriptions_id');
     }
 }

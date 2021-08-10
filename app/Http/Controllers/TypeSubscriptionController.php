@@ -23,6 +23,7 @@ class TypeSubscriptionController extends BaseAuthController
 
     public function add(Request $request)
     {
+        return $request->all();
         $typeSubscription=new TypeSubscription();
         $res= $typeSubscription->CreateOne($request->all());
         return response()->json($res);

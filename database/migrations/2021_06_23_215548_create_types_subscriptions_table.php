@@ -31,6 +31,6 @@ class CreateTypesSubscriptionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('subscriptions');
+        Schema::dropIfExists('types_subscriptions');
     }
 }
