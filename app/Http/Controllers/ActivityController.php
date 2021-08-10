@@ -8,7 +8,6 @@ class ActivityController extends BaseAuthController
 {
     public function index(Request $request)
     {
-        ///
         $res=new Result();
         $list=Activity::query();
         $gym_id=$this->guard()->user()->gym_id;
