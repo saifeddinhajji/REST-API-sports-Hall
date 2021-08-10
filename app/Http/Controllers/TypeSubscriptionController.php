@@ -28,11 +28,11 @@ class TypeSubscriptionController extends BaseAuthController
         return response()->json($res);
     }
 
-    public function delete(int $id)
+    public function find(int $id)
     {
         $res=new Result();
-        TypeSubscription::destroy($id);
-        $res->success();
+         $type_subscription= TypeSubscription::find($id);
+        $res->success($type_subscription);
         return response()->json($res);
     }
 

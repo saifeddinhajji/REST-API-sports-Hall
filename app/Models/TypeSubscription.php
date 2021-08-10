@@ -26,7 +26,7 @@ protected $with=['activity'];
     public $roleDataCreate =
         [
             'name' => 'required|string',
-            'description' => 'required|string',
+            'description' => 'nullable|string',
             'duration'=>'required|numeric',
             'price' => 'required|numeric',
             'unit'=>'required|in:day,month,year',

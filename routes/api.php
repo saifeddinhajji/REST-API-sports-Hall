@@ -54,9 +54,9 @@ Route::group([
         'prefix' => 'types_subscriptions',
     ], function ($router) {
         Route::get('', 'TypeSubscriptionController@index');
-        Route::post('', 'TypeSubscriptionController@add');
+        Route::get('{id}', 'TypeSubscriptionController@find');
+       Route::post('', 'TypeSubscriptionController@add');
         Route::put('/{id}', 'TypeSubscriptionController@update');
-        Route::delete('/{id}', 'TypeSubscriptionController@delete');
     });
 
     Route::group([
