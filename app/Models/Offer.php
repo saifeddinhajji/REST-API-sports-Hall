@@ -24,7 +24,7 @@ class Offer extends BaseModelClass
     public $roleDataCreate =
         [
             'name' => 'required|string',
-            'price' => 'required||numeric',
+            'price' => 'required|numeric',
             'duration'=>'required|numeric',
             'status'=>'nullable|boolean',
             'unit'=>'required|string|in:day,month,year'

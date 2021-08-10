@@ -53,4 +53,6 @@ class ActivityController extends BaseAuthController
         }
         return response()->json($res);
     }
+    //
+
 }

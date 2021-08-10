@@ -17,7 +17,7 @@
         Route::get('', 'ActivityController@index');
         Route::post('', 'ActivityController@add');
         Route::put('/{id}', 'ActivityController@update');
-        Route::delete('/{id}', 'ActivityController@delete');
+        Route::delete('change_status/{id}', 'ActivityController@changeStatus');
     });
 
     Route::group([
