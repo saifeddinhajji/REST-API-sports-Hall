@@ -1,6 +1,5 @@
 <?php
  use Illuminate\Support\Facades\Route;
-
     Route::group([
         'namespace' => '\App\Http\Controllers',
         'prefix' => 'auth'
@@ -10,9 +9,7 @@
         Route::put('update_password', 'AuthController@updatePassword');
         Route::put('me', 'AuthController@update');
         Route::get('me', 'AuthController@me');
-
     });
-
     Route::group([
         'namespace' => '\App\Http\Controllers',
         'prefix' => 'activities',
@@ -32,9 +29,6 @@
         Route::put('/{id}', 'SubscriptionController@update');
         Route::delete('/{id}', 'SubscriptionController@delete');
     });
-
-
-
 Route::group(['namespace' => '\App\Http\Controllers', 'prefix' => 'employees'],
     function ($router) {
         Route::get('', 'EmployeesController@index');
@@ -42,7 +36,6 @@ Route::group(['namespace' => '\App\Http\Controllers', 'prefix' => 'employees'],
         Route::put('/{id}', 'EmployeesController@update');
         Route::delete('/{id}', 'EmployeesController@delete');
     });
-
 Route::post('upload_file', 'UploadFileController@uploadFile');
 
 Route::group(['namespace' => '\App\Http\Controllers', 'prefix' => 'gyms'],
@@ -72,7 +65,8 @@ Route::group([
     ], function ($router) {
         Route::get('', 'OfferController@index');
         Route::post('', 'OfferController@add');
-        Route::put('/change_status/{id}', 'OfferController@changeStatus');
+        Route::post('', 'OfferController@add');
+        Route::put('{id}', 'OfferController@update');
     });
 Route::group([
     'namespace' => '\App\Http\Controllers',
@@ -87,5 +81,7 @@ Route::group([
         'namespace' => '\App\Http\Controllers',
         'prefix' => 'stats',
     ], function ($router) {
-        Route::get('', 'StatsController@index');
+        Route::get('admin', 'StatsController@AdminStats');
+        Route::get('manager', 'StatsController@ManagerStats');
+
     });

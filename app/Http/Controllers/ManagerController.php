@@ -22,10 +22,7 @@ class ManagerController extends Controller
         $res = new Result();
         try {
             $user=User::find($id);
-            if(!$user)
-            {
-                throw new \Exception(trans("manager introuvable dans la base de données"));
-            }
+            if(!$user) { throw new \Exception(trans("manager introuvable dans la base de données")); }
             $user['status']==true?$status=false:$status=true;
             $res=$user->UpdateOne(['status'=>$status],$id);
             $res->success();

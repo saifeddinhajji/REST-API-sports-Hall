@@ -1,24 +1,19 @@
 <?php
-
 namespace App\Http\Controllers;
-
 use App\Libs\Result;
 use App\Models\Activity;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
-
 class ActivityController extends BaseAuthController
 {
-
     public function index(Request $request)
     {
         $res=new Result();
-         Log::channel('stderr')->info(['type'=> $request->headers]);
         $list=Activity::query();
         $gym_id=$this->guard()->user()->gym_id;
         if($request->has('list'))
         {
-            $list= $list->where('status',1)->whereHas('coach',function ($q) use($gym_id){
+                $list= $list->where('status',1)->whereHas('coach',function ($q) use($gym_id){
                 $q->where('gym_id',$gym_id);
             })->get();
             $res->success($list);
@@ -31,20 +26,16 @@ class ActivityController extends BaseAuthController
         $res->successPaginate($list);
         return response()->json($res);
     }
-
     public function add(Request $request)
     {
         $activity=new Activity();
-
         $res= $activity->CreateOne($request->all());
         if(!$res->success)
         {
             return response()->json($res,400);
         }
         return response()->json($res);
-
     }
-
     public function update($id,Request $request)
     {
         $res=new Result();

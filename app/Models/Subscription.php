@@ -22,19 +22,16 @@ class Subscription extends BaseModelClass
      */
     public $roleDataCreate =
         [
-            'activity_id' => 'required|exists:activities,id',
+            'adherent_id' => 'required|exists:users,id',
             'type_subscriptions_id' => 'required||exists:users,id',
             'start_at'=>'required|date|after_or_equal:today',
             'end_at' => 'required|date|after_or_equal:start_at',
         ];
     protected $casts = [];
 protected $with=['activity','adherent'];
-    public function  activity()
-    {
-        return $this->belongsTo(Activity::class,'activity_id');
-    }
+
     public function  adherent()
     {
-        return $this->belongsTo(\App\Models\User::class,'adherent_id');
+        return $this->belongsTo(\App\Models\User::class);
     }
 }

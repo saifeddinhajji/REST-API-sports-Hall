@@ -40,7 +40,7 @@ class OfferController extends Controller
         }
         catch (\Exception $e) {
             $res->fail($e->getMessage());
-            return response()->json($res,400);
+            return response()->json($res);
 
         }
         return response()->json($res);
@@ -82,7 +82,7 @@ class OfferController extends Controller
         catch (\Exception $e)
         {
             $res->fail($e->getMessage());
-            return response()->json($res,400);
+            return response()->json($res);
         }
         return response()->json($res);
     }
