@@ -22,10 +22,11 @@ class Activity extends BaseModelClass
     public $roleDataCreate =
         [
             'name' => 'required|unique:activities,name',
-            'description' => 'required',
-            'coach_id' => 'required|unique:activities,name',
+            'description' => 'nullable|string',
+            'coach_id' => 'required|exists:users,id',
             'status'=>'nullable|boolean'
         ];
+
     protected $with=['coach'];
     protected $casts = ['status'=>'boolean'];
 

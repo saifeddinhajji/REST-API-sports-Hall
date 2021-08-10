@@ -71,10 +71,12 @@ class StatsController extends BaseAuthController
             $q->where('gym_id',$gym_id);
         })->count();
 
-        $stats['tables']['last_add_list']=Subscription::whereHas('adherent',function ($q) use($gym_id){
+        $stats['tables']['last_add_list']=Subscription::where('status',false)->whereHas('adherent',function ($q) use($gym_id){
             $q->where('gym_id',$gym_id);
         })->latest()->take(5)->get();
-        $stats['tables']['last_terminated_list']=Subscription::latest('end_at')->take(5)->get();
+        $stats['tables']['last_terminated_list']=Subscription::where('status',true)->whereHas('adherent',function ($q) use($gym_id){
+            $q->where('gym_id',$gym_id);
+        })->oldest('end_at')->take(5)->get();
         $list=array();
         for ($i = 6; $i > -1; $i--) {
             $list[Carbon::now()->subDays($i)->format('Y-m-d')] = Subscription::whereHas('adherent',function ($q) use($gym_id){
