@@ -41,6 +41,10 @@ class ActivityController extends BaseAuthController
         $res=new Result();
         try {
             $activity=new Activity();
+            if($request->has('status'))
+            {
+                $activity->roleDataCreate=[];
+            }
             $res=$activity->UpdateOne($request->all(),$id);
         }
         catch (\Exception $e)
