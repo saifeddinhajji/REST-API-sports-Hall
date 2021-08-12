@@ -33,7 +33,6 @@ class EmployeesController extends BaseAuthController
             $user=new User();
             $data=$request->all();
             $data['gym_id']=$this->guard()->user()->gym_id;
-           // return $data;
             $res=$user->CreateOne($data);
             if(!$res->success)
             {
@@ -60,6 +59,13 @@ class EmployeesController extends BaseAuthController
             $res->fail($e->getMessage());
             return response()->json($res,400);
         }
+        return response()->json($res);
+    }
+    public function detail($id)
+    {
+        $res=new Result();
+        $user=User::where('id',$id)->first();
+        $res->success($user);
         return response()->json($res);
     }
 }

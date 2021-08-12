@@ -33,8 +33,8 @@ Route::group(['namespace' => '\App\Http\Controllers', 'prefix' => 'employees'],
     function ($router) {
         Route::get('', 'EmployeesController@index');
         Route::post('', 'EmployeesController@add');
-        Route::put('/{id}', 'EmployeesController@update');
-        Route::delete('/{id}', 'EmployeesController@delete');
+        Route::put('{id}', 'EmployeesController@update');
+        Route::get('{id}', 'EmployeesController@detail');
     });
 Route::post('upload_file', 'UploadFileController@uploadFile');
 
