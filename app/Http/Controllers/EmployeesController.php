@@ -16,14 +16,19 @@ class EmployeesController extends BaseAuthController
         $list=User::query();
         if($request->has('role'))
         {
-
-           $list= $list->where('role',$request->role)->where('gym_id',$this->guard()->user()->gym_id)->get();
-
-            $res->success($list);
+           $list= $list->where('role',$request->role)->where('gym_id',$this->guard()->user()->gym_id);
+            $res->successPaginate($list);
             return response()->json($res);
         }
         $list->whereIn('role',['coach','secretary'])->where('gym_id',$this->guard()->user()->gym_id);
         $res->successPaginate($list);
+        return response()->json($res);
+    }
+    public function listCoachs()
+    {
+        $res=new Result();
+        $list= User::where('role','coach')->where('gym_id',$this->guard()->user()->gym_id)->get();
+        $res->success($list);
         return response()->json($res);
     }
     public function add(Request $request)

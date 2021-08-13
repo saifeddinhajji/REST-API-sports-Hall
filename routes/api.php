@@ -33,6 +33,7 @@ Route::group(['namespace' => '\App\Http\Controllers', 'prefix' => 'employees'],
     function ($router) {
         Route::get('', 'EmployeesController@index');
         Route::post('', 'EmployeesController@add');
+        Route::get('list_coachs','EmployeesController@listCoachs');
         Route::put('{id}', 'EmployeesController@update');
         Route::get('{id}', 'EmployeesController@detail');
     });
