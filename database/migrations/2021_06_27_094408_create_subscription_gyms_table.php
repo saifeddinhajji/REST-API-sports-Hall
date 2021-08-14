@@ -20,7 +20,7 @@ class CreateSubscriptionGymsTable extends Migration
             $table->date('start_at');
             $table->date('end_at');
             $table->string('payment_receipt');
-            $table->boolean('status')->default(false);
+            $table->string('status')->default("en attente");
             $table->timestamps();
         });
     }

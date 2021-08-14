@@ -39,10 +39,7 @@ class EmployeesController extends BaseAuthController
             $data=$request->all();
             $data['gym_id']=$this->guard()->user()->gym_id;
             $res=$user->CreateOne($data);
-            if(!$res->success)
-            {
-                throw new \Exception(trans($res->message));
-            }
+            if(!$res->success) {  throw new \Exception(trans($res->message)); }
             $res->success();
         }
         catch (\Exception $e) {

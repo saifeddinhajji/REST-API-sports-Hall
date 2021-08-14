@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\BaseModel\BaseModelClass;
+use App\Libs\Result;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 class SubscriptionGym extends BaseModelClass
 {
@@ -25,12 +26,19 @@ class SubscriptionGym extends BaseModelClass
      */
     public $roleDataCreate =
         [
-            'gym_id' => 'required|exists:gyms,id',
-            'offer_id' => 'required|exists:offers,id',
+            'gym_id' =>'required|exists:gyms,id',
+            'offer_id' =>'required|exists:offers,id',
             'start_at'=>'required|date|after_or_equal:today',
-            'end_at' => 'required|date|after_or_equal:start_at',
+            'end_at' =>'required|date|after_or_equal:start_at',
             'payment_receipt'=>'required|string'
         ];
+    public function ChangeStatus(array $data, $updateId): Result
+    {
+        $this->roleDataUpdate = [
+            'status' => 'required|string|in:terminer,refuser'
+        ];
+        return $this->CreateOne($data, $updateId);
+    }
     protected $casts = [];
 
     public function  offer()
