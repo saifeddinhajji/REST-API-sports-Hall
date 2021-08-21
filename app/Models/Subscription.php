@@ -26,7 +26,9 @@ class Subscription extends BaseModelClass
             'start_at'=>'required|date|after_or_equal:today',
             'end_at' => 'required|date|after_or_equal:start_at',
         ];
-    protected $casts = [];
+    protected $casts = [
+        'status'=>'boolean'
+    ];
     protected $appends=["is_terminated"];
     protected $with=['typesSubscription','adherent'];
     public function GetIsTerminatedAttribute()
@@ -54,4 +56,6 @@ class Subscription extends BaseModelClass
     {
         return $this->belongsTo(TypeSubscription::class,'type_subscriptions_id');
     }
+
+
 }

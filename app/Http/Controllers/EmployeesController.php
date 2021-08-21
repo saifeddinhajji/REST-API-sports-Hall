@@ -51,9 +51,10 @@ class EmployeesController extends BaseAuthController
     public function update($id,Request $request)
     {
         $res=new Result();
-        $offer=new User();
+        $user=new User();
+        $user->roleDataCreate=[];
         try {
-            $offer->UpdateOne($request->all(),$id);
+           $res= $user->UpdateOne($request->all(),$id);
             $res->success();
         }
         catch (\Exception $e)

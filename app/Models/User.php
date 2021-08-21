@@ -16,7 +16,7 @@ class User extends BaseModelUser
      * The attributes that are mass assignable.
      * @var array
      */
-    protected $fillable = [ 'first_name', 'last_name', 'status','email', 'password', 'phone', 'photo', 'role', 'address','gym_id' ];
+    protected $fillable = [ 'first_name', 'last_name', 'status','email', 'password', 'phone', 'photo', 'role', 'address','gym_id',"status" ];
     /**
      * The attributes that should be hidden for arrays.
      * @var array

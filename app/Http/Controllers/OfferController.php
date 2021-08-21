@@ -86,4 +86,5 @@ class OfferController extends Controller
         }
         return response()->json($res);
     }
+
 }

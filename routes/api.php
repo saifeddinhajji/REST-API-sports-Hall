@@ -34,7 +34,7 @@ Route::group(['namespace' => '\App\Http\Controllers', 'prefix' => 'employees'],
     function ($router) {
         Route::get('', 'EmployeesController@index');
         Route::post('', 'EmployeesController@add');
-        Route::get('list_coachs','EmsubscriptionsployeesController@listCoachs');
+        Route::get('list_coachs','EmployeesController@listCoachs');
         Route::put('{id}', 'EmployeesController@update');
         Route::get('{id}', 'EmployeesController@detail');
     });
@@ -49,6 +49,11 @@ Route::group(['namespace' => '\App\Http\Controllers', 'prefix' => 'managers'],
     function ($router) {
         Route::get('', 'ManagerController@index');
         Route::put('change_status/{id}', 'ManagerController@changeStatus');
+    });
+Route::group(['namespace' => '\App\Http\Controllers', 'prefix' => 'manager'],
+    function ($router) {
+        Route::get('subscriptions', 'RenewalController@list');
+        Route::post('subscriptions', 'RenewalController@add');
     });
 
 Route::group(['namespace' => '\App\Http\Controllers', 'prefix' => 'cash_management'],
@@ -74,8 +79,9 @@ Route::group([
     ], function ($router) {
         Route::get('', 'OfferController@index');
         Route::post('', 'OfferController@add');
-        Route::post('', 'OfferController@add');
         Route::put('{id}', 'OfferController@update');
+        Route::put('{id}/change_status', 'OfferController@changeStatus');
+
     });
 Route::group([
     'namespace' => '\App\Http\Controllers',
