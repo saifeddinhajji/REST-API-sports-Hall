@@ -52,10 +52,8 @@ class EmployeesController extends BaseAuthController
     {
         $res=new Result();
         $user=new User();
-        $user->roleDataCreate=[];
         try {
-           $res= $user->UpdateOne($request->all(),$id);
-            $res->success();
+           $res= $user->UpdateOne($request->except('phone','email'),$id);
         }
         catch (\Exception $e)
         {

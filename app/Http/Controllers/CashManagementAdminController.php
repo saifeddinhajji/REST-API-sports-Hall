@@ -45,6 +45,10 @@ class CashManagementAdminController extends Controller
         $res=new Result();
         $data['list_gyms']=Gym::select('name','id')->get();
         $data['list_offers']=Offer::select(['name','id'])->get();
+        $data['cards']['count_subscription_accept']=0;
+        $data['cards']['count_subscription_enattente']=0;
+        $data['cards']['count_subscription_refuse']=0;
+        $data['cards']['count_subscription_profit']=0;
         $res->success($data);
         return response()->json($res);
     }

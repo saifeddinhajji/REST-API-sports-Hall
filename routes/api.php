@@ -18,6 +18,7 @@
         Route::post('', 'ActivityController@add');
         Route::put('/{id}', 'ActivityController@update');
         Route::delete('change_status/{id}', 'ActivityController@changeStatus');
+     
     });
 
     Route::group([
@@ -28,7 +29,7 @@
         Route::post('', 'SubscriptionController@add');
         Route::put('/{id}', 'SubscriptionController@update');
         Route::put('/{id}/change_status', 'SubscriptionController@changeStatus');
-        Route::get('cards','SubscriptionController@cards');
+        Route::get('get_settings', 'SubscriptionController@getSettings');
     });
 Route::group(['namespace' => '\App\Http\Controllers', 'prefix' => 'employees'],
     function ($router) {
