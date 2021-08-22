@@ -5,6 +5,7 @@ use App\Models\Gym;
 use App\Models\SubscriptionGym;
 use App\Models\User;
 use App\Libs\Result;
+use DateTime;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -38,6 +39,15 @@ class AuthController extends BaseAuthController
             $selectedUser = User::where(['email' => $request->get('email')])->first();
             $responseToken = $this->respondWithToken($token);
             $responseToken['user'] = $selectedUser;
+            if(in_array($responseToken['user']['role'],['manager','secretary']))
+            {
+                $sub=SubscriptionGym::where('status','terminer')->where('gym_id',$responseToken['user']['gym_id'])->orderBy('id','desc')->first();
+                if($sub['end-at'] < new DateTime('now'))
+                {
+                    $responseToken['user']['is_blocked_service']=true;
+                    $responseToken['user']['is_blocked_button']=false;
+                }
+            }
             $res->success($responseToken);
             return response()->json($res);
         }

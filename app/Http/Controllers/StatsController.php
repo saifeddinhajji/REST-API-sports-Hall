@@ -45,10 +45,7 @@ class StatsController extends BaseAuthController
         foreach ($price_of_months as $key => $value){
         {
             $sum=0;
-            if($value==null ||count($value)==0)
-            {
-                $price_of_months[$key]=$sum;
-            }
+            if($value==null ||count($value)==0) { $price_of_months[$key]=$sum; }
             else{
                 foreach ($value as $id)  { $sum=$sum+Offer::find($id)['price']; }
                 $price_of_months[$key]=$sum;

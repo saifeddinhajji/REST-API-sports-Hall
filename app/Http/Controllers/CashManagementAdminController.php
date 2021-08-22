@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Libs\Result;
 use App\Models\Gym;
 use App\Models\Offer;
+use App\Models\Subscription;
 use App\Models\SubscriptionGym;
 use Illuminate\Http\Request;
 
@@ -45,10 +46,15 @@ class CashManagementAdminController extends Controller
         $res=new Result();
         $data['list_gyms']=Gym::select('name','id')->get();
         $data['list_offers']=Offer::select(['name','id'])->get();
-        $data['cards']['count_subscription_accept']=0;
-        $data['cards']['count_subscription_enattente']=0;
-        $data['cards']['count_subscription_refuse']=0;
-        $data['cards']['count_subscription_profit']=0;
+        $data['cards']['count_subscription_accept']=SubscriptionGym::where('status','terminer')->count();
+        $data['cards']['count_subscription_enattente']=SubscriptionGym::where('status','en attente')->count();
+        $data['cards']['count_subscription_refuse']=SubscriptionGym::where('status','refuser')->count();
+        $list=SubscriptionGym::where('status','terminer')->select('offer_id')->pluck('offer_id')->toArray();
+        $profit=0;
+        foreach($list as $idSub) { 
+             $profit=$profit+Offer::find($idSub)['price']; 
+            }
+        $data['cards']['count_subscription_profit']=$profit;
         $res->success($data);
         return response()->json($res);
     }

@@ -33,6 +33,7 @@ public function list()
         {
             $res->fail($e->getMessage());
         }
+
         return response()->json($res);
     }
 }

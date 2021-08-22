@@ -13,15 +13,9 @@ class UploadFileController extends Controller
     {
         $res = new \App\Libs\Result();
         try {
-            if (!$request->hasFile('image') || !$request->file('image')->isValid()) {
-                throw new \Exception('Problème d\'upload image');
-            }
-            $valid = Validator::make($request->all(), [
-                'image' => 'mimes:jpeg,png|max:3048',
-            ]);
-            if ($valid->fails()) {
-                throw new \Exception($valid->errors()->all()[0]);
-            }
+            if (!$request->hasFile('image') || !$request->file('image')->isValid()) {  throw new \Exception('Problème d\'upload image');  }
+            $valid = Validator::make($request->all(), [   'image' => 'mimes:jpeg,png|max:3048']);
+            if ($valid->fails()) { throw new \Exception($valid->errors()->all()[0]);   }
             $name = Str::random(9);
             $extension = $request->image->extension();
             $request->image->storeAs('/public', $name . "." . $extension);
