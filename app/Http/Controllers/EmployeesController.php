@@ -21,13 +21,13 @@ class EmployeesController extends BaseAuthController
             return response()->json($res);
         }
         $list->whereIn('role',['coach','secretary'])->where('gym_id',$this->guard()->user()->gym_id);
-        $res->successPaginate($list);
+        $res->successPaginate($list->latest());
         return response()->json($res);
     }
     public function listCoachs()
     {
         $res=new Result();
-        $list= User::where('role','coach')->where('gym_id',$this->guard()->user()->gym_id)->get();
+        $list= User::where('role','coach')->where('gym_id',$this->guard()->user()->gym_id)->latest()->get();
         $res->success($list);
         return response()->json($res);
     }

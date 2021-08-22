@@ -20,7 +20,7 @@ class OfferController extends Controller
             {
                 $q->where('status',$request->get('status'));
             }
-        })->get();
+        })->latest()->get();
         $res->success($query);
         return response()->json($res);
     }

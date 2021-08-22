@@ -17,7 +17,7 @@ class TypeSubscriptionController extends BaseAuthController
         $list=TypeSubscription::whereHas('activity',function($q) use ($gym_id) {
             $q->whereHas('coach', function ($q) use ($gym_id) { $q->where('gym_id', $gym_id); });
         });
-        $res->successPaginate($list);
+        $res->successPaginate($list->latest());
         return response()->json($res);
     }
 

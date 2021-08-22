@@ -13,7 +13,7 @@ class ManagerController extends Controller
     public function index()
     {
         $res=new Result();
-        $query=User::where('role','manager');
+        $query=User::where('role','manager')->latest();
         $res->successPaginate($query);
         return response()->json($res);
     }

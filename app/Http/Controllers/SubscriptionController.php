@@ -48,7 +48,7 @@ class SubscriptionController extends BaseAuthController
             $type_subscriptions_id=$request->get('type_subscriptions_id');   
             $list->where('type_subscriptions_id',$type_subscriptions_id);
         }
-        $res->successPaginate($list);
+        $res->successPaginate($list->latest());
         return response()->json($res);
     }
 

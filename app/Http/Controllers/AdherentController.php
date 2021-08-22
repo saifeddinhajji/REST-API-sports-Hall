@@ -19,7 +19,7 @@ class AdherentController extends BaseAuthController
             return response()->json($res);
         }
         $list=$list->where('role','adherent')->where('gym_id',$this->guard()->user()->gym_id)->latest();
-        $res->successPaginate($list);
+        $res->successPaginate($list->latest());
         return response()->json($res);
     }
     public function add(Request $request)

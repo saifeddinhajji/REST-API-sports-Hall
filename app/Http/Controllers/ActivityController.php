@@ -23,7 +23,7 @@ class ActivityController extends BaseAuthController
         {
             $q->where('gym_id',$gym_id);
         })->get();
-        $res->successPaginate($list);
+        $res->successPaginate($list->latest());
         return response()->json($res);
     }
     public function add(Request $request)
