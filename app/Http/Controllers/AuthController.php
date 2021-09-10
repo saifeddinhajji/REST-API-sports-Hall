@@ -37,17 +37,33 @@ class AuthController extends BaseAuthController
         $credentials = $request->only('email', 'password');
         if ($token = $this->guard()->attempt($credentials)) {
             $selectedUser = User::where(['email' => $request->get('email')])->first();
+            if($selectedUser['role'] != "admin" && $selectedUser['status'] ==false)
+            {
+                $res->fail('l\'utilisateur est bloqué');
+                return response()->json($res,400);
+            }
             $responseToken = $this->respondWithToken($token);
             $responseToken['user'] = $selectedUser;
-            if(in_array($responseToken['user']['role'],['manager','secretary']))
+
+            if(in_array($selectedUser['role'],['manager','secretary']))
             {
-                $sub=SubscriptionGym::where('status','terminer')->where('gym_id',$responseToken['user']['gym_id'])->orderBy('id','desc')->first();
-                if($sub['end-at'] < new DateTime('now'))
+
+                $sub=SubscriptionGym::where('status','accepter')->where('gym_id',$selectedUser['gym_id'])->orderBy('id','desc')->first();
+
+             if(($sub && $sub['end_at'] < new DateTime('now')) || $sub==null)
                 {
+
                     $responseToken['user']['is_blocked_service']=true;
-                    $responseToken['user']['is_blocked_button']=false;
+                    $responseToken['is_blocked_service']=true;
+
                 }
+
             }
+            else
+            {
+                $responseToken['is_blocked_service']=false;
+            }
+          //  dd($responseToken);
             $res->success($responseToken);
             return response()->json($res);
         }

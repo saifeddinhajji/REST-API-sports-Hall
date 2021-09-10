@@ -24,19 +24,11 @@ class User extends BaseModelUser
      * @var array
      */
     protected $hidden = ['password', 'remember_token'];
-    protected $appends=['is_blocked_button', 'is_blocked_service'];
     /**
      * The attributes that should be cast to native types.
      * @var array
      */
-    public function GetIsBlockedButtonAttribute()
-    {
-        return false;
-    }
-    public function getIsBlockedServiceAttribute()
-    {
-        return false;
-    }
+
     public $roleDataCreate =
         [
             'first_name' => 'required|string',

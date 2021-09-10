@@ -24,7 +24,11 @@ public function list()
         $gym_id=$this->guard()->user()->gym_id;
         $res=new Result();
             try {
+                $sub=SubscriptionGym::where('gym_id',$gym_id)->where('status','accepter')->orderby('id','DESC')->first();
                 $dataSubscription = $request->all(['start_at','end_at','offer_id','payment_receipt']);
+
+                if(($sub && $sub['end_at']>$dataSubscription['start_at']) ||($sub && $sub['end_at']> $dataSubscription['end_at']))
+                    throw new \Exception('Vous avez un abonnement existant');
                 $dataSubscription['gym_id']=$gym_id;
                 $subscriptionGym=new SubscriptionGym();
                 $res= $subscriptionGym->CreateOne($dataSubscription);

@@ -27,7 +27,7 @@ class StatsController extends BaseAuthController
          $stats['cards']['count_subscriptions']=SubscriptionGym::count();
 
          $stats['tables']['last_add_list']=SubscriptionGym::latest()->take(5)->get();
-         $stats['tables']['last_terminated_list']=SubscriptionGym::where('status',"terminer")->latest('end_at')->take(5)->get();
+         $stats['tables']['last_terminated_list']=SubscriptionGym::where('status',"accepter")->latest('end_at')->take(5)->get();
 
          $list=array();
             for ($i = 6; $i > -1; $i--) {
@@ -37,7 +37,7 @@ class StatsController extends BaseAuthController
         $price_of_months=array();
 
         for ($i = 12; $i > -1; $i--) {
-            $price_of_months[Carbon::now()->subMonth($i)->format('Y-m')] =SubscriptionGym::where('status','terminer')->where(function($q) use($i){
+            $price_of_months[Carbon::now()->subMonth($i)->format('Y-m')] =SubscriptionGym::where('status','accepter')->where(function($q) use($i){
               $q->whereYear('created_at','2021')->whereMonth('created_at',$i);
             })->select('offer_id')->pluck('offer_id')->toArray();
         }

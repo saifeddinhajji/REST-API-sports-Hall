@@ -35,7 +35,7 @@ class SubscriptionGym extends BaseModelClass
     public function ChangeStatus(array $data, $updateId): Result
     {
         $this->roleDataUpdate = [
-            'status' => 'required|string|in:terminer,refuser'
+            'status' => 'required|string|in:accepter,refuser'
         ];
         return $this->CreateOne($data, $updateId);
     }

@@ -6,6 +6,7 @@ use App\Models\Gym;
 use App\Models\Offer;
 use App\Models\Subscription;
 use App\Models\SubscriptionGym;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class CashManagementAdminController extends Controller
@@ -30,7 +31,14 @@ class CashManagementAdminController extends Controller
         }
         if($request->has('status'))
         {
-            $list->where('status',$request->get('status'));
+
+                $list->where('status',$request->get('status'));
+
+          /*  if($request->get('status') == "termnier")
+            {
+                $date=new \DateTime('now');
+                $list->where('status',$request->get('termnier'))->where('end_at','<',$date);
+            }*/
         }
         $res->successPaginate($list);
         return response()->json($res);
@@ -46,13 +54,13 @@ class CashManagementAdminController extends Controller
         $res=new Result();
         $data['list_gyms']=Gym::select('name','id')->get();
         $data['list_offers']=Offer::select(['name','id'])->get();
-        $data['cards']['count_subscription_accept']=SubscriptionGym::where('status','terminer')->count();
+        $data['cards']['count_subscription_accept']=SubscriptionGym::where('status','accepter')->count();
         $data['cards']['count_subscription_enattente']=SubscriptionGym::where('status','en attente')->count();
         $data['cards']['count_subscription_refuse']=SubscriptionGym::where('status','refuser')->count();
-        $list=SubscriptionGym::where('status','terminer')->select('offer_id')->pluck('offer_id')->toArray();
+        $list=SubscriptionGym::where('status','accepter')->select('offer_id')->pluck('offer_id')->toArray();
         $profit=0;
-        foreach($list as $idSub) { 
-             $profit=$profit+Offer::find($idSub)['price']; 
+        foreach($list as $idSub) {
+             $profit=$profit+Offer::find($idSub)['price'];
             }
         $data['cards']['count_subscription_profit']=$profit;
         $res->success($data);

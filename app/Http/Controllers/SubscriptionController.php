@@ -16,11 +16,11 @@ class SubscriptionController extends BaseAuthController
     {
         $res=new Result();
         $gym_id=$this->guard()->user()->gym_id;
-        
-        $list=Subscription::whereHas('adherent',function($q) use ($gym_id,$request) { 
+
+        $list=Subscription::whereHas('adherent',function($q) use ($gym_id,$request) {
             if($request->has('phone'))
             {
-                $phone=$request->get('phone');    
+                $phone=$request->get('phone');
                 $q->where('gym_id',$gym_id)->where('phone',$phone);
             }
             else
@@ -32,11 +32,11 @@ class SubscriptionController extends BaseAuthController
 
         if($request->has('coach_id'))
         {
-            
+
             $coach_id=(int)$request->get('coach_id');
-            $list->whereHas('typesSubscription',function($q) use ($coach_id) { 
-                $q->whereHas('activity',function($q) use ($coach_id) { 
-                    $q->whereHas('coach',function($q) use ($coach_id) { 
+            $list->whereHas('typesSubscription',function($q) use ($coach_id) {
+                $q->whereHas('activity',function($q) use ($coach_id) {
+                    $q->whereHas('coach',function($q) use ($coach_id) {
                         $q->where('id',$coach_id);
                     });
                  });
@@ -45,7 +45,7 @@ class SubscriptionController extends BaseAuthController
 
         if($request->has('type_subscriptions_id'))
         {
-            $type_subscriptions_id=$request->get('type_subscriptions_id');   
+            $type_subscriptions_id=$request->get('type_subscriptions_id');
             $list->where('type_subscriptions_id',$type_subscriptions_id);
         }
         $res->successPaginate($list->latest());
@@ -84,17 +84,18 @@ class SubscriptionController extends BaseAuthController
         $gym_id=$this->guard()->user()->gym_id;
         $res=new Result();
         $data['list_coachs']=User::where('role','coach')->where('gym_id',$gym_id)->select('first_name','last_name','id')->get();
-        $data['list_offers']=TypeSubscription::whereHas('activity',function($q) use ($gym_id) {
+        $data['list_adherents']=User::where('role','adherent')->where('gym_id',$gym_id)->select('first_name','last_name','id')->get();
+        $data['list_subscriptions']=TypeSubscription::whereHas('activity',function($q) use ($gym_id) {
             $q->whereHas('coach', function ($q) use ($gym_id) { $q->where('gym_id', $gym_id); });
-        })->select(['name','id'])->get();
+        })->get();
         $date=new DateTime('now');
         $data['cards']['count_subscription_accept']=Subscription::where('status',true)->whereHas('adherent',function($q) use ($gym_id) { $q->where('gym_id',$gym_id); })->count();
         $data['cards']['count_subscription_termine']=Subscription::where('status',true)->whereDate('end_at','<',$date)->whereHas('adherent',function($q) use ($gym_id) { $q->where('gym_id',$gym_id); })->count();;
         $data['cards']['count_subscription_encours']=Subscription::where('status',true)->whereDate('end_at','<',$date)->where('status',true)->whereDate('end_at','>',$date)->whereDate('start_at','<',$date)->whereHas('adherent',function($q) use ($gym_id) { $q->where('gym_id',$gym_id); })->count();
         $list=Subscription::whereHas('adherent',function ($q) use($gym_id){ $q->where('gym_id',$gym_id);})->select('type_subscriptions_id')->pluck('type_subscriptions_id')->toArray();
         $profit=0;
-        foreach($list as $idSub) { 
-             $profit=$profit+TypeSubscription::find($idSub)['price']; 
+        foreach($list as $idSub) {
+             $profit=$profit+TypeSubscription::find($idSub)['price'];
             }
         $data['cards']['count_subscription_profit']=$profit;
         $res->success($data);
