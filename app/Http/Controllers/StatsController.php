@@ -19,8 +19,8 @@ class StatsController extends BaseAuthController
     public function AdminStats()
     {
          $res=new Result();
-
          $stats=array();
+
          $stats['cards']['count_managers']=User::where('role','manager')->count();
          $stats['cards']['count_gyms']=Gym::count();
          $stats['cards']['count_offers']=Offer::count();

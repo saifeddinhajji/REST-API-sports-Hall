@@ -21,7 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('phone')->nullable();
             $table->string('role')->default('manager');
             $table->string('email')->unique()->nullable();
-            $table->boolean('status')->default(false);
+            $table->boolean('status')->default(true);
             $table->string('password')->nullable();
             $table->string('address')->nullable();
             $table->foreignId('gym_id')->nullable()->constrained('gyms')->onUpdate('cascade')->onDelete('cascade');

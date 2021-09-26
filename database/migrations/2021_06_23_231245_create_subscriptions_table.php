@@ -18,7 +18,7 @@ class CreateSubscriptionsTable extends Migration
             $table->foreignId('type_subscriptions_id')->constrained('types_subscriptions')->onUpdate('cascade')->onDelete('cascade');
             $table->date('start_at');
             $table->date('end_at');
-            $table->boolean('status')->default(false);
+            $table->boolean('status')->default(true);
             $table->timestamps();
         });
     }
