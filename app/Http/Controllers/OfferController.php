@@ -50,7 +50,9 @@ class OfferController extends Controller
         $res = new Result();
         try {
             $offer=new Offer();
-            $res=$offer->CreateOne($request->all(['name','duration','price','unit']));
+            $data=$request->all(['name','duration','price','unit']);
+            $data['status']=true;
+            $res=$offer->CreateOne($data);
             if(!$res->success)
             {
                 throw new \Exception(trans($res->message));

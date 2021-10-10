@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 use App\Models\Gym;
+use App\Models\Offer;
 use App\Models\SubscriptionGym;
 use App\Models\User;
 use App\Libs\Result;
+use Carbon\Carbon;
 use DateTime;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\JsonResponse;
@@ -23,7 +25,21 @@ class AuthController extends BaseAuthController
     {
 
     }
-
+    public function getEndAt($start_at,$duration,$type)
+    {
+        //
+        $day= Carbon::parse($start_at);
+        ;
+        switch ($type)
+        {
+            case "day":
+                return    $day->addDay($duration)->format('Y-m-d');
+            case "month":
+                return    $day->addMonth($duration)->format('Y-m-d');
+            case "year":
+                return    $day->addYear($duration)->format('Y-m-d');
+        }
+    }
     /**
      * Get a JWT token via given credentials.
      *
@@ -110,7 +126,12 @@ class AuthController extends BaseAuthController
         $user = new User();
         $res = $user->CreateOne($data);
         if(!$res->success) { return response()->json($res,400);}
-        $dataSubscription = $request->all(['start_at','end_at','offer_id','payment_receipt']);
+        $dataSubscription = $request->all(['start_at','offer_id','payment_receipt']);
+
+        $offer=Offer::find($request->get('offer_id'));
+        $date=  $this->getEndAt($request->get('start_at'),$offer['duration'],$offer['unit']);
+
+        $dataSubscription['end_at']=$date;
         $dataSubscription['gym_id']=$res->data->gym_id;
         $subscriptionGym=new SubscriptionGym();
         $res= $subscriptionGym->CreateOne($dataSubscription);

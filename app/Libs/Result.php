@@ -30,6 +30,7 @@ class Result
 
     public function successPaginate(\Illuminate\Database\Eloquent\Builder $data)
     {
+
         $paginate = $data->paginate(10);
         $this->data = ['list' => $paginate->items(), 'total' => $paginate->total()];
         $this->success = true;

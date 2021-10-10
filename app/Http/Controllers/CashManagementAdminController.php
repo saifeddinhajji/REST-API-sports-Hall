@@ -13,34 +13,30 @@ class CashManagementAdminController extends Controller
 {
     public function index(Request $request)
     {
+
         $res=new Result();
         $list=SubscriptionGym::query();
-        if($request->has('gym_id'))
+        if($request->has('gym_id') &&  is_numeric($request->get('gym_id')) && $request->get('gym_id') != "null")
         {
             $gym_id=$request->get('gym_id');
             $list->whereHas('gym',function($q) use ($gym_id){
                $q->where('id',$gym_id);
            });
         }
-        if($request->has('offer_id'))
+        if($request->has('offer_id')&& is_numeric($request->get('offer_id')) && $request->get('offer_id') != "null")
         {
             $offer_id=$request->get('offer_id');
             $list->whereHas('offer',function($q) use ($offer_id){
                 $q->where('id',$offer_id);
             });
         }
-        if($request->has('status'))
+        if($request->has('status') && $request->get('status') != "null")
         {
 
                 $list->where('status',$request->get('status'));
 
-          /*  if($request->get('status') == "termnier")
-            {
-                $date=new \DateTime('now');
-                $list->where('status',$request->get('termnier'))->where('end_at','<',$date);
-            }*/
         }
-        $res->successPaginate($list);
+        $res->successPaginate($list->latest());
         return response()->json($res);
     }
     public function changeStatus(Request $request,$id)

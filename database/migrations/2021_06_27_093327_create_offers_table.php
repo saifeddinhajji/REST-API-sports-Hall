@@ -19,7 +19,7 @@ class CreateOffersTable extends Migration
             $table->integer('duration');
             $table->float('price');
             $table->string('unit');
-            $table->boolean('status')->default(false);
+            $table->boolean('status')->default(true);
             $table->timestamps();
         });
     }
